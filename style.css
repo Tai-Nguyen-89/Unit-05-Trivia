@@ -3,6 +3,17 @@ input[type=radio]:checked {
     color: white;
 }
 
+#quiz {
+    visibility: hidden;
+    margin-left: 10px;
+    float: left;
+    width: 960px;
+    background: beige;
+    padding: 10px 20px;
+
+}
+
 #results{
+    margin-top: 10px;
     visibility: hidden;
 }

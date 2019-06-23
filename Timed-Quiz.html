@@ -10,41 +10,56 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
-       
+
     </style>
 </head>
 
 <body>
+    <h1 id="opening">Welcome to a Timed Quiz. You have 1 minute to answer 7 random questions. Good luck!
+        <div></div><input id="start" type="button" value="Start" onclick="start()"></div>
+    </h1>
     <form id="quiz" name="quiz">
         <div class="container">
             <div>
                 <h1>Quiz</h1>
+                <h1 id="display"></h1>
                 <div>1. What color do you get when mixing red and yellow?</div>
-                <input class="form-check-input" type="radio" name="exampleRadios" id="answer" value="Purple"> Purple
+                <input class="form-check-input" type="radio" name="quest1" id="answer" value="Purple"> Purple
                 <br>
-                <input class="form-check-input" type="radio" name="exampleRadios" id="answer" value="Brown"> Brown <br>
-                <input class="form-check-input" type="radio" name="exampleRadios" id="answer" value="Orange"> Orange
+                <input class="form-check-input" type="radio" name="quest1" id="answer" value="Brown"> Brown <br>
+                <input class="form-check-input" type="radio" name="quest1" id="answer" value="Orange"> Orange
                 <br>
-                <input class="form-check-input" type="radio" name="exampleRadios" id="answer" value="Pink"> Pink <br>
+                <input class="form-check-input" type="radio" name="quest1" id="answer" value="Pink"> Pink <br>
 
-            <div>1. What color do you get when mixing red and yellow?</div>
-                <input class="form-check-input" type="radio" name="exampleRadios" id="answer" value="Purple"> Purple
+                <div>2. Which one of these characters is not a Marvel comic character?</div>
+                <input class="form-check-input" type="radio" name="quest2" id="answer" value="Captain Marvel Jr.">
+                Captain Marvel Jr.
                 <br>
-                <input class="form-check-input" type="radio" name="exampleRadios" id="answer" value="Purple"> Brown <br>
-                <input class="form-check-input" type="radio" name="exampleRadios" id="answer" value="Purple"> Orange
+                <input class="form-check-input" type="radio" name="quest2" id="answer" value="Namor"> Namor <br>
+                <input class="form-check-input" type="radio" name="quest2" id="answer" value="Deathlok"> Deathlok
                 <br>
-                <input class="form-check-input" type="radio" name="exampleRadios" id="answer" value="Purple"> Pink <br>
+                <input class="form-check-input" type="radio" name="quest2" id="answer" value="Hyperion"> Hyperion <br>
 
-
+                <div>3. Which animal has white and black stripes?</div>
+                <input class="form-check-input" type="radio" name="quest3" id="answer" value="Killer Whale"> Killer
+                Whale
+                <br>
+                <input class="form-check-input" type="radio" name="quest3" id="answer" value="Zebra"> Zebra <br>
+                <input class="form-check-input" type="radio" name="quest3" id="answer" value="Panda"> Panda
+                <br>
+                <input class="form-check-input" type="radio" name="quest3" id="answer" value="Skunk"> Skunk <br>
 
                 <div>
-                    <input id="finish" type="button" value="Finish" onclick="checkit();">
+                    <input id="finish" type="button" value="Finish" onclick="checkit()">
                 </div>
 
             </div>
+            <div id="results">
+                <div id="Correct"></div>
+                <div id="Incorrect"></div>
+            </div>
     </form>
-    <div id="results">
-        <div id="tally">Congratulations, you've finished!</div>
+
 
     </div>
 
@@ -59,11 +74,67 @@
 
     <script>
 
-        function checkit() {
-document.getElementById("results").style.visibility="visible";
-            var question1 = document.quiz.question1.value;
+var time;
+        var intervalId;
+        var clockRunning;
+        var $timer = $(".timer");
+        var $main = $(".main");
 
+        function start() {
+
+
+            document.getElementById("quiz").style.visibility = "visible";
+
+            $("#opening").text("");
+            $("#display").text("01:00");
+            time = 60;
+            var currentTime = timeConverter(time);
+            $timer.text(currentTime);
+            intervalId = setInterval(countDown, 100);
+        
+        function countDown() {
+            time--;
+            var currentTime = timeConverter(time);
+            $timer.text(currentTime);
+            if (time === 0) {
+                end1();
+            }
         }
+           
+            }
+
+            function checkit() {
+
+                    var quest1 = document.quiz.quest1.value;
+                    var quest2 = document.quiz.quest2.value;
+                    var quest3 = document.quiz.quest3.value;
+
+                    var correct = 0;
+                    var incorrect = 0;
+
+                    if (quest1 == "Orange") {
+                        correct++;
+                    } else if (quest1 != "Orange") {
+                        incorrect++;
+                    }
+                    if (quest2 == "Captain Marvel Jr.") {
+                        correct++;
+                    } else if (quest2 != "Captain Marvel Jr.") {
+                        incorrect++;
+                    }
+                    if (quest3 == "Zebra") {
+                        correct++;
+                    } else if (quest3 != "Zebra") {
+                        incorrect++;
+                    }
+
+                    document.getElementById("results").style.visibility = "visible";
+
+                    document.getElementById("Correct").innerHTML = "Correct: " + correct;
+                    document.getElementById("Incorrect").innerHTML = "Incorrect: " + incorrect;
+
+                }
+
 
     </script>
 </body>
