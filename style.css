@@ -1,0 +1,8 @@
+input[type=radio]:checked {
+    background-color: red;
+    color: white;
+}
+
+#results{
+    visibility: hidden;
+}
