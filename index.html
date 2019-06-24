@@ -22,8 +22,8 @@
         <div class="container">
             <div>
                 <h1>Quiz</h1>
-                <h1 id="display"></h1>
-                <div>1. What color do you get when mixing red and yellow?</div>
+                <h1 id="display">01:00</h1>
+                <div><b>1. What color do you get when mixing red and yellow?</b></div>
                 <input class="form-check-input" type="radio" name="quest1" id="answer" value="Purple"> Purple
                 <br>
                 <input class="form-check-input" type="radio" name="quest1" id="answer" value="Brown"> Brown <br>
@@ -31,7 +31,7 @@
                 <br>
                 <input class="form-check-input" type="radio" name="quest1" id="answer" value="Pink"> Pink <br>
 
-                <div>2. Which one of these characters is not a Marvel comic character?</div>
+                <div><b>2. Which one of these characters is not a Marvel comic character?</b></div>
                 <input class="form-check-input" type="radio" name="quest2" id="answer" value="Captain Marvel Jr.">
                 Captain Marvel Jr.
                 <br>
@@ -40,7 +40,7 @@
                 <br>
                 <input class="form-check-input" type="radio" name="quest2" id="answer" value="Hyperion"> Hyperion <br>
 
-                <div>3. Which animal has white and black stripes?</div>
+                <div><b>3. Which animal has white and black stripes?</b></div>
                 <input class="form-check-input" type="radio" name="quest3" id="answer" value="Killer Whale"> Killer
                 Whale
                 <br>
@@ -48,6 +48,37 @@
                 <input class="form-check-input" type="radio" name="quest3" id="answer" value="Panda"> Panda
                 <br>
                 <input class="form-check-input" type="radio" name="quest3" id="answer" value="Skunk"> Skunk <br>
+
+                <div><b>4. Which villain broke Batman's back?</b></div>
+                <input class="form-check-input" type="radio" name="quest4" id="answer" value="Joker"> Joker
+                <br>
+                <input class="form-check-input" type="radio" name="quest4" id="answer" value="Riddler"> Riddler<br>
+                <input class="form-check-input" type="radio" name="quest4" id="answer" value="Killer Croc"> Killer Croc<br>
+                <input class="form-check-input" type="radio" name="quest4" id="answer" value="Bane"> Bane<br>
+
+                <div><b>5. Which of these is not a Eevee evolution?</b></div>
+                <input class="form-check-input" type="radio" name="quest5" id="answer" value="Espeon"> Espeon
+                <br>
+                <input class="form-check-input" type="radio" name="quest5" id="answer" value="Sylveon"> Sylveon<br>
+                <input class="form-check-input" type="radio" name="quest5" id="answer" value="Leafeon"> Leafeon
+                <br>
+                <input class="form-check-input" type="radio" name="quest5" id="answer" value="Gustleon"> Gustleon<br>
+
+                <div><b>6. Which princess do you meet in Chrono Trigger?</b></div>
+                <input class="form-check-input" type="radio" name="quest6" id="answer" value="Marle"> Marle
+                <br>
+                <input class="form-check-input" type="radio" name="quest6" id="answer" value="Zelda"> Zelda <br>
+                <input class="form-check-input" type="radio" name="quest6" id="answer" value="Peach"> Peach
+                <br>
+                <input class="form-check-input" type="radio" name="quest6" id="answer" value="Kitana"> Kitana <br>
+
+                <div><b>7. What comes first?</b></div>
+                <input class="form-check-input" type="radio" name="quest7" id="answer" value="AA"> A
+                <br>
+                <input class="form-check-input" type="radio" name="quest7" id="answer" value="BB"> B<br>
+                <input class="form-check-input" type="radio" name="quest7" id="answer" value="CC"> C
+                <br>
+                <input class="form-check-input" type="radio" name="quest7" id="answer" value="DD"> D <br>
 
                 <div>
                     <input id="finish" type="button" value="Finish" onclick="checkit()">
@@ -74,40 +105,71 @@
 
     <script>
 
-        var time;
-        var intervalId;
-        var clockRunning;
-        var $timer = $(".timer");
-        var $main = $(".main");
+        window.onload = function () {
+            $("#start").on("click", start);
+            $("#finish").on("click", stop());
+        };
+
+        var time = 60;
+        var intervalID;
         var clockRunning = false;
 
         function start() {
             document.getElementById("quiz").style.visibility = "visible";
 
-            $("#opening").text("");
             $("#display").text("01:00");
-            
+            $("#opening").text("");
 
             if (!clockRunning) {
-      intervalId = setInterval(count, 1000);
-      clockRunning = true;
-      console.log(intervalID);
-    }
-
-            function countDown() {
+                intervalID = setInterval(count, 1000);
+                clockRunning = true;
+                console.log(intervalID);
+            }
+        }
+        function count() {
             time--;
             var currentTime = timeConverter(time);
             $("#display").text(currentTime);
             if (time === 0) {
                 checkit();
+                stop();
             }
         }
+
+        function stop() {
+            if (clockRunning) {
+                clearInterval(intervalID);
+                clockRunning = false;
+                checkit();
+            }
+
+        }
+
+        function timeConverter(t) {
+            var minutes = Math.floor(t / 60);
+            var seconds = t - (minutes * 60);
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
+            if (minutes === 0) {
+                minutes = "00";
+            }
+            else if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+            return minutes + ":" + seconds;
+            console.log(minutes);
+            console.log(seconds);
         }
 
         function checkit() {
             var quest1 = document.quiz.quest1.value;
             var quest2 = document.quiz.quest2.value;
             var quest3 = document.quiz.quest3.value;
+            var quest4 = document.quiz.quest4.value;
+            var quest5 = document.quiz.quest5.value;
+            var quest6 = document.quiz.quest6.value;
+            var quest7 = document.quiz.quest7.value;
 
             var correct = 0;
             var incorrect = 0;
@@ -127,31 +189,36 @@
             } else if (quest3 != "Zebra") {
                 incorrect++;
             }
+            if (quest4 == "Bane") {
+                correct++;
+            } else if (quest4 != "Bane") {
+                incorrect++;
+            }
+            if (quest5 == "Gustleon") {
+                correct++;
+            } else if (quest5 != "Gustleon") {
+                incorrect++;
+            }
+            if (quest6 == "Marle") {
+                correct++;
+            } else if (quest6 != "Marle") {
+                incorrect++;
+            }
+            if (quest7 == "AA") {
+                correct++;
+            } else if (quest7 != "AA") {
+                incorrect++;
+            }
 
             document.getElementById("results").style.visibility = "visible";
 
             document.getElementById("Correct").innerHTML = "Correct: " + correct;
             document.getElementById("Incorrect").innerHTML = "Incorrect: " + incorrect;
 
+            checkit();
+                stop();
+
         }
-
-        function timeConverter(t) {
-                var minutes = Math.floor(t / 60);
-                var seconds = t - (minutes * 60);
-                if (seconds < 10) {
-                    seconds = "0" + seconds;
-                }
-                if (minutes === 0) {
-                    minutes = "00";
-                }
-                else if (minutes < 10) {
-                    minutes = "0" + minutes;
-                }
-                return minutes + ":" + seconds;
-                console.log(minutes);
-                console.log(seconds);
-            }
-
 
 
     </script>
