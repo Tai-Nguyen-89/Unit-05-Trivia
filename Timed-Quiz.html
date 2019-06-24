@@ -74,66 +74,84 @@
 
     <script>
 
-var time;
+        var time;
         var intervalId;
         var clockRunning;
         var $timer = $(".timer");
         var $main = $(".main");
+        var clockRunning = false;
 
         function start() {
-
-
             document.getElementById("quiz").style.visibility = "visible";
 
             $("#opening").text("");
             $("#display").text("01:00");
-            time = 60;
-            var currentTime = timeConverter(time);
-            $timer.text(currentTime);
-            intervalId = setInterval(countDown, 100);
-        
-        function countDown() {
+            
+
+            if (!clockRunning) {
+      intervalId = setInterval(count, 1000);
+      clockRunning = true;
+      console.log(intervalID);
+    }
+
+            function countDown() {
             time--;
             var currentTime = timeConverter(time);
-            $timer.text(currentTime);
+            $("#display").text(currentTime);
             if (time === 0) {
-                end1();
+                checkit();
             }
         }
-           
+        }
+
+        function checkit() {
+            var quest1 = document.quiz.quest1.value;
+            var quest2 = document.quiz.quest2.value;
+            var quest3 = document.quiz.quest3.value;
+
+            var correct = 0;
+            var incorrect = 0;
+
+            if (quest1 == "Orange") {
+                correct++;
+            } else if (quest1 != "Orange") {
+                incorrect++;
+            }
+            if (quest2 == "Captain Marvel Jr.") {
+                correct++;
+            } else if (quest2 != "Captain Marvel Jr.") {
+                incorrect++;
+            }
+            if (quest3 == "Zebra") {
+                correct++;
+            } else if (quest3 != "Zebra") {
+                incorrect++;
             }
 
-            function checkit() {
+            document.getElementById("results").style.visibility = "visible";
 
-                    var quest1 = document.quiz.quest1.value;
-                    var quest2 = document.quiz.quest2.value;
-                    var quest3 = document.quiz.quest3.value;
+            document.getElementById("Correct").innerHTML = "Correct: " + correct;
+            document.getElementById("Incorrect").innerHTML = "Incorrect: " + incorrect;
 
-                    var correct = 0;
-                    var incorrect = 0;
+        }
 
-                    if (quest1 == "Orange") {
-                        correct++;
-                    } else if (quest1 != "Orange") {
-                        incorrect++;
-                    }
-                    if (quest2 == "Captain Marvel Jr.") {
-                        correct++;
-                    } else if (quest2 != "Captain Marvel Jr.") {
-                        incorrect++;
-                    }
-                    if (quest3 == "Zebra") {
-                        correct++;
-                    } else if (quest3 != "Zebra") {
-                        incorrect++;
-                    }
-
-                    document.getElementById("results").style.visibility = "visible";
-
-                    document.getElementById("Correct").innerHTML = "Correct: " + correct;
-                    document.getElementById("Incorrect").innerHTML = "Incorrect: " + incorrect;
-
+        function timeConverter(t) {
+                var minutes = Math.floor(t / 60);
+                var seconds = t - (minutes * 60);
+                if (seconds < 10) {
+                    seconds = "0" + seconds;
                 }
+                if (minutes === 0) {
+                    minutes = "00";
+                }
+                else if (minutes < 10) {
+                    minutes = "0" + minutes;
+                }
+                return minutes + ":" + seconds;
+                console.log(minutes);
+                console.log(seconds);
+            }
+
 
 
     </script>
